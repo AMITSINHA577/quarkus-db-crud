@@ -1,23 +1,15 @@
 package com.harisraza.resources;
 
-import java.util.List;
-
 import com.harisraza.models.Note;
 import com.harisraza.services.impl.NoteServiceImpl;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import java.util.List;
 
 @Path("/api")
 public class AppResource {
@@ -47,16 +39,16 @@ public class AppResource {
     @Path("/note/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getNote(@PathParam("id") int noteId) {
-        Note note = this.noteService.getNote(noteId);
-        return Response.status(Status.FOUND).entity(note).build();
+    public Response getNoteById(@PathParam("id") int noteId) {
+        Note note = this.noteService.getNoteById(noteId);
+        return Response.status(Status.OK).entity(note).build();
     }
 
     @Path("/note/{id}")
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteNote(@PathParam("id") int noteId) {
-        this.noteService.deleteNote(noteId);
+    public Response deleteNoteById(@PathParam("id") int noteId) {
+        this.noteService.deleteNoteById(noteId);
         return Response.ok("Note deleted.").build();
     }
 
@@ -85,4 +77,46 @@ public class AppResource {
         return Response.status(Status.OK).entity(updatedNote).build();
     }
 
+    // New APIs
+
+    @Path("/notes/count")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response countNotes() {
+        long count = this.noteService.countNotes();
+        return Response.ok("Total number of notes: " + count).build();
+    }
+
+    @Path("/notes/summary")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNotesSummary() {
+        List<String> summaries = this.noteService.getNotesSummary();
+        return Response.status(Status.OK).entity(summaries).build();
+    }
+
+    @Path("/notes/recent")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRecentNotes() {
+        List<Note> recentNotes = this.noteService.getRecentNotes();
+        return Response.status(Status.OK).entity(recentNotes).build();
+    }
+
+    @Path("/notes/average-length")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getAverageNoteLength() {
+        double averageLength = this.noteService.getAverageNoteLength();
+        return Response.ok("Average length of notes: " + averageLength).build();
+    }
+
+    @Path("/notes/{id}/tags")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addTagsToNote(@PathParam("id") int noteId, List<String> tags) {
+        Note note = this.noteService.addTagsToNote(noteId, tags);
+        return Response.status(Status.OK).entity(note).build();
+    }
 }

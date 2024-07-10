@@ -27,10 +27,59 @@ The project follows a standard Maven project structure. The main components of t
 
 The Quarkus CRUD API exposes the following endpoints:
 
-- `GET /api/note/{id}`: Retrieve an note by its ID.
-- `POST /api/note`: Creates a new note.
-- `PUT /api/note/{id}`: Updates an existing item by providing its ID.
-- `DELETE /api/note/{id}`: Deletes an note.
+API Endpoints for Note App:
+Retrieve a Note by ID
+
+Endpoint: GET /api/note/{id}
+Description: Retrieve a note by its unique ID.
+Create a New Note
+
+Endpoint: POST /api/note
+Description: Create a new note.
+Update an Existing Note
+
+Endpoint: PUT /api/note/{id}
+Description: Update an existing note by its ID.
+Delete a Note
+
+Endpoint: DELETE /api/note/{id}
+Description: Delete a note by its ID.
+Get All Notes
+
+Endpoint: GET /api/notes
+Description: Retrieve all notes.
+Search Notes by Title
+
+Endpoint: GET /api/notes/search?title={title}
+Description: Search notes by title.
+Update Note Content
+
+Endpoint: PATCH /api/note/{id}
+Description: Update the content of a note identified by its ID.
+Get Total Number of Notes
+
+Endpoint: GET /api/notes/count
+Description: Retrieve the total number of notes.
+Get Notes Summary
+
+Endpoint: GET /api/notes/summary
+Description: Retrieve a summary of all notes, e.g., their IDs and titles.
+Get Recent Notes
+
+Endpoint: GET /api/notes/recent
+Description: Retrieve notes created recently, e.g., within the last week.
+Get Average Note Length
+
+Endpoint: GET /api/notes/average-length
+Description: Calculate and retrieve the average length of note content.
+Add Tags to a Note
+
+Endpoint: POST /api/note/{id}/tags
+Description: Add tags to a note identified by its ID.
+Get Tags of a Note
+
+Endpoint: GET /api/note/{id}/tags
+Description: Retrieve tags associated with a note.
 
 The API follows RESTful conventions and returns JSON responses.
 
